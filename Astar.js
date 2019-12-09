@@ -29,7 +29,7 @@ const plot = (node, type) => {
   let color = "#7af";
   if (type == "start") color = "#fae";
   if (type == "end") color = "#f55";
-  const id = "#maze_row_" + node.x +">#"+ node.y;
+  const id = "#maze_row_" + node.x + ">#" + node.y;
   $(id).css("background-color", color);
 };
 
@@ -178,76 +178,47 @@ const random = (min, max) => {
 // A* algorithm
 // ------------------------------------ ||
 function Astar() {
-  var start = {
-    x: random(0, row),
-    y: random(0, col),
-    G: 0,
-    F: 0
-  };
-
-  const end = {
-    x: random(0, row),
-    y: random(0, col)
-  };
-
-  renderMaze(row, col);
-  plot(start, "start");
-  plot(end, "end");
-
+  const start = { x: random(0, row), y: random(0, col), G: 0, F: 0 };
+  const end = { x: random(0, row), y: random(0, col) };
   let open = [start];
   let closed = [];
   let path = [];
 
+  renderMaze(row, col);
   plot(start, "start");
-  plot(end, "end");
+  plot(end, "end"); 
 
   while (open.length > 0) {
     goal = false;
-
     open.sort((a, b) => (a.F > b.F ? 1 : -1));
-
     cur = open.shift();
-
-    if (!alreadyExists(path, cur)) {
-      path.push(cur);
-    }
+    if (!alreadyExists(path, cur)) path.push(cur);
 
     N = neighbours(cur);
-
     N.forEach(n => {
       let Add = true;
-
       if (isGoal(n, end)) {
         open.length = 0;
         goal = true;
       }
-
       if (goal) return;
-
       n.H = heuristic(n, end);
       n.G = cost(n.p, n) + cur.G;
       n.F = n.G + n.H;
-
       open.forEach(n2 => {
         if (n2.F) {
           if (n.x == n2.x && n.y == n2.y && n.F > n2.F) Add = false;
         }
       });
-
       closed.forEach(n2 => {
         if (n2.F) {
           if (n.x == n2.x && n.y == n2.y && n.F > n2.F) Add = false;
           else Add = true;
         }
       });
-
       if (goal) return;
-
-      if (Add) {
-        open.push(n);
-      }
+      if (Add) open.push(n);
     });
-
     closed.push(cur);
   }
 
@@ -258,25 +229,22 @@ function Astar() {
 // Main Function
 // ------------------------------------ ||
 $(document).ready(() => {
-  
   // Retrive path
   path = Astar();
   // Retrieve length
   path_track = 0;
   path_end = path.length;
-
+  // Loop
   const loop = setInterval(() => {
     // Render path
     plot(path[path_track++]);
-
     // Clear Loop and Reset
     if (path_track == path_end) {
       clearInterval(loop);
       setTimeout(() => {
         location.reload();
-      }, 500);
+      }, 1000);
     }
-
     // THE END! :)
   }, 100);
 });

@@ -1,11 +1,16 @@
 <html>
   <head>
-    <title>A* Path Visualization</title>
+    <title>Path Visualization</title>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="Astar.js"></script>
     <style>
+      h3 {
+        font-family: monospace;
+        font-size: 2em;
+        color: steelblue;
+      }
       #maze {
-        margin: 0 auto;
+        margin: 10 auto;
         display: flex;
         flex-direction: column;
       }
@@ -18,10 +23,33 @@
       .maze_row {
         display: flex;
       }
+      #input {
+        border-bottom: solid 1px #333;
+        padding: 0.5em;
+      }
+      button {
+        height: 40px;
+        width: 100px;
+        border: solid 2px steelblue;
+        border-radius: 10px;
+        background: rgb(255, 255, 255);
+        font-size: 1.3em;
+        color: #555;
+      }
+      button:hover {
+        background-color: steelblue;
+        color: white;
+      }
     </style>
   </head>
 
   <body>
+    <h3>Path Visualization</h3>
+    <div id="input">
+      <button> A* </button>
+      <button> BFS </button>
+      <button> DFS </button>
+    </div>
     <div id="maze"></div>
   </body>
 </html>

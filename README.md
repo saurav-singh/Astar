@@ -1,1 +1,5 @@
-# A* Path Finding
+#Path Finding Visualization
+
+![A*](screenshot.png)
+
+
