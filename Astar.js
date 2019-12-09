@@ -15,7 +15,7 @@ const renderMaze = (row, col) => {
     $("#maze").append(mazeRow);
     for (let c = 0; c < col; c++) {
       const block = document.createElement("div");
-      block.id = r + "" + c;
+      block.id = c;
       block.className = "block";
       $("#maze_row_" + r).append(block);
     }
@@ -29,7 +29,7 @@ const plot = (node, type) => {
   let color = "#7af";
   if (type == "start") color = "#fae";
   if (type == "end") color = "#f55";
-  const id = "#" + node.x + node.y;
+  const id = "#maze_row_" + node.x +">#"+ node.y;
   $(id).css("background-color", color);
 };
 
@@ -258,10 +258,9 @@ function Astar() {
 // Main Function
 // ------------------------------------ ||
 $(document).ready(() => {
-
+  
   // Retrive path
   path = Astar();
-
   // Retrieve length
   path_track = 0;
   path_end = path.length;
@@ -277,7 +276,7 @@ $(document).ready(() => {
         location.reload();
       }, 500);
     }
-  
-  // THE END! :)
+
+    // THE END! :)
   }, 100);
 });
